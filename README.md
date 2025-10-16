@@ -1,4 +1,21 @@
 # Aplicación Web Segura - Diseño de Arquitectura Empresarial
+Vídeo demostartivo
+<img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/85c2b388-6492-4a3f-be21-a9143c905ac5" />
+
+Instancias en AWS para apache y para spring
+<img width="614" height="215" alt="image" src="https://github.com/user-attachments/assets/ea1ff2f9-9fb3-4695-8d4e-4b2ada9ee004" />
+
+
+Aplicación Segura
+<img width="921" height="71" alt="image" src="https://github.com/user-attachments/assets/0d07b936-211e-4cbf-8b8c-e7ec465b2d98" />
+<img width="677" height="773" alt="image" src="https://github.com/user-attachments/assets/6ee46b87-0e7e-47da-8113-73e450eccf9c" />
+<img width="921" height="607" alt="image" src="https://github.com/user-attachments/assets/cbbfcc69-ebd8-4b58-bd62-84416c3be3d9" />
+<img width="921" height="587" alt="image" src="https://github.com/user-attachments/assets/2a033ae3-3db6-4e6e-aec3-483141e4531c" />
+<img width="921" height="368" alt="image" src="https://github.com/user-attachments/assets/65996eae-5925-4e2f-ab7c-2fd6f9d89be8" />
+<img width="921" height="248" alt="image" src="https://github.com/user-attachments/assets/822f396a-b45c-4fed-b14a-00fea28688e3" />
+<img width="921" height="677" alt="image" src="https://github.com/user-attachments/assets/a572bcca-4a8c-4d5b-af88-a7b06ed0b8f6" />
+<img width="921" height="253" alt="image" src="https://github.com/user-attachments/assets/265fe922-014e-4380-a663-d77c936b631b" />
+<img width="921" height="648" alt="image" src="https://github.com/user-attachments/assets/8a1da52b-8f7c-4aa4-9c2c-a3d5be77b095" />
 
 Este proyecto demuestra una **aplicación web segura y escalable** desplegada en infraestructura AWS utilizando una arquitectura de dos servidores con cifrado TLS, hashing de contraseñas BCrypt y autenticación mediante API RESTful. La implementación sigue las mejores prácticas de seguridad y patrones arquitectónicos.
 
@@ -139,7 +156,7 @@ curl -k https://localhost:443/api/status
 # Deberías ver algo como:
 # {"service":"Spring Boot Secure API","users":2,"status":"OK","timestamp":"..."}
 ```
->>>>FOTOOOO api corriendo
+<img width="921" height="164" alt="image" src="https://github.com/user-attachments/assets/157e4eec-576f-4c7b-9da7-0fb10d2ba63f" />
 
 #### Paso 7: Acceder a la Aplicación
 
@@ -189,7 +206,7 @@ curl -k https://54.236.29.198/api/status
   "timestamp": "2025-10-16T00:45:15.542915136"
 }
 ```
->>>>FOTOOO api status
+<img width="677" height="376" alt="image" src="https://github.com/user-attachments/assets/0a1685f1-0935-46f6-968b-6b9a4979080c" />
 
 Esta prueba verifica que el servidor Spring está corriendo y respondiendo correctamente.
 
@@ -200,7 +217,7 @@ curl -k -X POST https://54.236.29.198/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password123"}'
 ```
->>>>FOTOOOO true verificación credenciales válidas
+<img width="921" height="248" alt="image" src="https://github.com/user-attachments/assets/94b89043-d181-43c8-abec-68ac40bdad29" />
 
 **Resultado esperado:**
 ```json
@@ -224,7 +241,7 @@ curl -k -X POST https://54.236.29.198/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"wrongpassword"}'
 ```
->>>>FOTOOO false ver más
+<img width="921" height="253" alt="image" src="https://github.com/user-attachments/assets/b75894a3-f28d-4224-a07c-91ca8a72ee8b" />
 
 **Resultado esperado:**
 ```json
@@ -244,7 +261,7 @@ curl -k -X POST https://54.236.29.198/api/login \
   -H "Content-Type: application/json" \
   -d '{"username":"noexiste","password":"cualquiera"}'
 ```
->>>>FOTOOOO juan false
+<img width="921" height="648" alt="image" src="https://github.com/user-attachments/assets/15fae67e-8c2f-481f-a37e-ffc51a81f843" />
 
 **Resultado esperado:**
 ```json
