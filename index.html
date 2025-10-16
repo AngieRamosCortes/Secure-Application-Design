@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplicación Segura - Angie Ramos</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .login-form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .info {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            padding: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Aplicación Segura - Taller de Arquitectura</h1>
+        <p>Por: Angie Ramos</p>
+    </header>
+
+    <div class="info">
+        <p><strong>Arquitectura:</strong> Esta aplicación demuestra una arquitectura de dos servidores:</p>  
+        <ul>
+            <li>Servidor Apache: Entrega el contenido HTML+JS (esta página) usando HTTPS</li>
+            <li>Servidor Spring: API REST para autenticación y servicios usando HTTPS</li>
+        </ul>
+        <p><strong>Características de seguridad:</strong></p>
+        <ul>
+            <li>Comunicación cifrada usando TLS (HTTPS)</li>
+            <li>Contraseñas almacenadas como hash usando BCrypt</li>
+            <li>Autenticación para proteger API REST</li>
+            <li>Certificados SSL para ambos servidores</li>
+        </ul>
+    </div>
+
+    <div class="login-form">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div>
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div style="margin-top: 15px;">
+                <button type="submit">Iniciar sesión</button>
+            </div>
+        </form>
+        <p><small>Credenciales de prueba: admin/password123 o angie/angie123</small></p>
+    </div>
+
+    <div id="result" class="result">
+        <h3>Respuesta del servidor:</h3>
+        <pre id="response"></pre>
+    </div>
+
+    <script>
+        // Configure your Spring server URL here
+        // Usar la IP pública de tu servidor Spring (spring-server)
+        const SPRING_SERVER_URL = 'https://54.236.29.198/api/login';
+        const SPRING_API_BASE = 'https://54.236.29.198/api';
+        
+        // Función para mostrar estado de carga
+        function showLoading(message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div style="text-align: center; color: #2196F3;">
+                    <h3>⏳ ${message}</h3>
+                    <div class="loader"></div>
+                </div>
+            `;
+        }
+        
+        // Función para mostrar error
+        function showError(title, message, details = '') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3 style="color: red;">✗ ${title}</h3>
+                <div style="background-color: #ffebee; padding: 15px; border-radius: 5px; border-left: 4px solid #f44336;">
+                    <strong>${message}</strong>
+                    ${details ? `<br><br><small style="color: #666;">${details}</small>` : ''}
+                </div>
+            `;
+        }
+        
+        // Función para mostrar éxito
+        function showSuccess(data) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3 style="color: green;">✓ Autenticación Exitosa</h3>
+                <div style="background-color: #e8f5e9; padding: 15px; border-radius: 5px; border-left: 4px solid #4CAF50;">
+                    <p style="font-size: 18px; margin: 10px 0;"><strong>${data.message}</strong></p>
+                    <p style="color: #2e7d32;">Usuario: <strong>${data.username}</strong></p>
+                    <p style="color: #2e7d32;">Conexión segura establecida mediante TLS/HTTPS</p>
+                    <p style="color: #2e7d32;">Contraseña verificada usando BCrypt hash</p>
+                    <hr style="border: 1px solid #c8e6c9;">
+                    <details>
+                        <summary style="cursor: pointer; color: #1b5e20; font-weight: bold;">Ver respuesta completa del servidor</summary>
+                        <pre style="background-color: #f1f8e9; padding: 10px; border-radius: 3px; margin-top: 10px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                </div>
+            `;
+        }
+        
+        // Función para mostrar fallo de autenticación
+        function showAuthFailure(data) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3 style="color: #ff9800;">✗ Autenticación Fallida</h3>
+                <div style="background-color: #fff3e0; padding: 15px; border-radius: 5px; border-left: 4px solid #ff9800;">
+                    <p style="font-size: 16px; margin: 10px 0;"><strong>${data.message}</strong></p>
+                    <p style="color: #e65100;">Por favor verifica tus credenciales e intenta nuevamente.</p>
+                    <hr style="border: 1px solid #ffe0b2;">
+                    <details>
+                        <summary style="cursor: pointer; color: #e65100; font-weight: bold;">Ver detalles de la respuesta</summary>
+                        <pre style="background-color: #fef5e7; padding: 10px; border-radius: 3px; margin-top: 10px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                </div>
+            `;
+        }
+        
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Validación básica
+            if (!username || !password) {
+                showError('Campos Requeridos', 'Por favor ingresa usuario y contraseña');
+                return;
+            }
+
+            try {
+                showLoading('Conectando con el servidor seguro...');
+                
+                const requestBody = { username, password };
+                console.log('🔐 Enviando solicitud a:', SPRING_SERVER_URL);
+                console.log('👤 Usuario:', username);
+                console.log('🔑 Longitud de contraseña:', password.length);
+                console.log('📦 Request body:', requestBody);
+                
+                const response = await fetch(SPRING_SERVER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    mode: 'cors'
+                });
+                
+                console.log('📡 Estado de la respuesta:', response.status);
+                console.log('📋 Headers:', [...response.headers.entries()]);
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Datos recibidos:', data);
+                
+                // Mostrar resultado basado en el éxito de la autenticación
+                if (data.success === true) {
+                    showSuccess(data);
+                    
+                    // Opcional: hacer una llamada adicional al endpoint /api/hello
+                    setTimeout(async () => {
+                        try {
+                            const helloResponse = await fetch(SPRING_API_BASE + '/hello');
+                            const helloData = await helloResponse.json();
+                            console.log('👋 Hello endpoint:', helloData);
+                        } catch (err) {
+                            console.log('Info: No se pudo contactar /api/hello', err);
+                        }
+                    }, 500);
+                } else {
+                    showAuthFailure(data);
+                }
+
+            } catch (error) {
+                console.error('❌ Error completo:', error);
+                showError(
+                    'Error de Conexión',
+                    error.message,
+                    `No se pudo conectar con el servidor Spring en ${SPRING_SERVER_URL}<br><br>
+                    <strong>Posibles causas:</strong><br>
+                    • El servidor Spring no está ejecutándose<br>
+                    • El certificado SSL no es válido (normal en desarrollo)<br>
+                    • El puerto 443 no está accesible<br>
+                    • Problema de CORS o configuración de red<br><br>
+                    <strong>Solución:</strong> Verifica que el servidor esté corriendo y accesible.`
+                );
+            }
+        });
+        
+        // Test de conectividad al cargar la página
+        window.addEventListener('load', async function() {
+            console.log('🚀 Aplicación cargada');
+            console.log('🔗 Spring Server URL:', SPRING_SERVER_URL);
+            
+            try {
+                const statusResponse = await fetch(SPRING_API_BASE + '/status', {
+                    mode: 'cors'
+                });
+                if (statusResponse.ok) {
+                    const statusData = await statusResponse.json();
+                    console.log('✅ Servidor Spring en línea:', statusData);
+                }
+            } catch (err) {
+                console.log('⚠️ No se pudo conectar con el servidor Spring al cargar:', err.message);
+            }
+        });
+    </script>
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        details {
+            margin-top: 10px;
+        }
+        
+        summary:hover {
+            opacity: 0.8;
+        }
+    </style>
+</body>
+</html>
