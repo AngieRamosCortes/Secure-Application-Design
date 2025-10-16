@@ -1,10 +1,15 @@
 # Aplicación Web Segura - Diseño de Arquitectura Empresarial
+
+Este proyecto demuestra una **aplicación web segura y escalable** desplegada en infraestructura AWS utilizando una arquitectura de dos servidores con cifrado TLS, hashing de contraseñas BCrypt y autenticación mediante API RESTful. La implementación sigue las mejores prácticas de seguridad y patrones arquitectónicos.
+
+**Autor**: Angie Ramos  
+**Curso**: Taller de Arquitectura Empresarial  
+**Institución**: Universidad Escuela Colombiana de Ingeniería Julio Garavito 
+**Fecha**: Octubre 2025  
+**Versión**: 1.0
+
 Vídeo demostartivo
 <img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/85c2b388-6492-4a3f-be21-a9143c905ac5" />
-
-Instancias en AWS para apache y para spring
-<img width="614" height="215" alt="image" src="https://github.com/user-attachments/assets/ea1ff2f9-9fb3-4695-8d4e-4b2ada9ee004" />
-
 
 Aplicación Segura
 <img width="921" height="71" alt="image" src="https://github.com/user-attachments/assets/0d07b936-211e-4cbf-8b8c-e7ec465b2d98" />
@@ -17,13 +22,13 @@ Aplicación Segura
 <img width="921" height="253" alt="image" src="https://github.com/user-attachments/assets/265fe922-014e-4380-a663-d77c936b631b" />
 <img width="921" height="648" alt="image" src="https://github.com/user-attachments/assets/8a1da52b-8f7c-4aa4-9c2c-a3d5be77b095" />
 
-Este proyecto demuestra una **aplicación web segura y escalable** desplegada en infraestructura AWS utilizando una arquitectura de dos servidores con cifrado TLS, hashing de contraseñas BCrypt y autenticación mediante API RESTful. La implementación sigue las mejores prácticas de seguridad y patrones arquitectónicos.
+Instancias en AWS para apache y para spring
+<img width="614" height="215" alt="image" src="https://github.com/user-attachments/assets/ea1ff2f9-9fb3-4695-8d4e-4b2ada9ee004" />
 
-**Autor**: Angie Ramos  
-**Curso**: Taller de Arquitectura Empresarial  
-**Institución**: Universidad Escuela Colombiana de Ingeniería Julio Garavito 
-**Fecha**: Octubre 2025  
-**Versión**: 1.0
+Conexión a instancias y Compilación exitosa
+<img width="921" height="519" alt="image" src="https://github.com/user-attachments/assets/3f853041-38c9-4ba6-84ad-b3533d3b2bb7" />
+<img width="921" height="192" alt="image" src="https://github.com/user-attachments/assets/452bdf50-634b-4b63-9079-cc5ecf6bc596" />
+<img width="921" height="475" alt="image" src="https://github.com/user-attachments/assets/78db4697-b2ff-461e-867e-6df3e84ad0f1" />
 
 ## 📋 Descripción del Proyecto
 
